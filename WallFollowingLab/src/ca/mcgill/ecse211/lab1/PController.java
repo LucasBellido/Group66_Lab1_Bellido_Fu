@@ -77,8 +77,6 @@ public class PController implements UltrasonicController {
     
     
   }
-  
-  public int=
 
 
   @Override
