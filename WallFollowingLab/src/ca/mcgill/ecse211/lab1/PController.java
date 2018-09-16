@@ -48,7 +48,37 @@ public class PController implements UltrasonicController {
     }
 
     // TODO: process a movement based on the us distance passed in (P style)
+    
+    int pTypeConstant = 15;
+    double distError = this.bandCenter - distance;	// compute the difference between how far the robot is from the wall and it's desired position
+    
+    if(Math.abs(distError) <= this.bandwidth) {          // if the position of the robot falls within the margin of error, maintain the same speed  	
+    	WallFollowingLab.leftMotor.setSpeed(MOTOR_SPEED); 
+        WallFollowingLab.rightMotor.setSpeed(MOTOR_SPEED);
+        WallFollowingLab.leftMotor.forward();
+        WallFollowingLab.rightMotor.forward();
+    	 	
+    }
+    else if(distError<0) {
+    	int correctionSpeed = Math.abs(pTypeConstant*distError);
+    	WallFollowingLab.leftMotor.setSpeed(MOTOR_SPEED-correctionSpeed); // if the robot is too far from the wall, change the motor speed's so the robot fixes it's position
+        WallFollowingLab.rightMotor.setSpeed(MOTOR_SPEED+correctionSpeed);
+        WallFollowingLab.leftMotor.forward();
+        WallFollowingLab.rightMotor.forward();
+    }
+    else if(distError>0) {
+    	int correctionSpeed = pTypeConstant*distError;
+    	WallFollowingLab.leftMotor.setSpeed(MOTOR_SPEED+correctionSpeed); // if the robot is too close to the wall, change the motor speed's so the robot fixes it's position
+        WallFollowingLab.rightMotor.setSpeed(MOTOR_SPEED-correctionSpeed);
+        WallFollowingLab.leftMotor.forward();
+        WallFollowingLab.rightMotor.forward();
+    }
+    
+    
+    
   }
+  
+  public int=
 
 
   @Override
